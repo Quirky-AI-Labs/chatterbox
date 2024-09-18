@@ -5,9 +5,9 @@ import streamlit as st
 
 
 class BasePage(ABC):
-    def __init__(self, title: str, state: Optional[object] = None, **kwargs):
+    def __init__(self, title: str, session: Optional[object] = None, **kwargs):
         self.title = title
-        self.state = state
+        self.session = session
         self.params = kwargs
 
     @abstractmethod
