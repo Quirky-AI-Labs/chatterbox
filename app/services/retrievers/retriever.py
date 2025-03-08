@@ -32,7 +32,9 @@ class Retriever:
 class ChainManager:
     def __init__(self, retriever: Retriever):
         self.retriever = retriever
-        self.chain = self.create_chain()
+        self.chain = None
+        if retriever is not None:
+            self.chain = self.create_chain()
 
     def create_chain(self):
         llm = ChatOpenAI(model="gpt-4o")
