@@ -6,7 +6,7 @@ from loguru import logger
 from app.pages.base import BasePage
 from app.pages.utils import ConversationMixins
 from app.services.ingress.channel import OCRDocument
-from app.services.retrievers.retriever import Retriever
+from app.services.retrievers.retriever import Orchestrator, Retriever
 from app.services.structures.conversation import Conversation, ConversationList, Message
 
 tmp_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "tmp"))
@@ -32,6 +32,7 @@ class NewConversationPage(BasePage, ConversationMixins):
         logger.info(f"Session: {session}")
         if session.vector_store is not None:
             self.retriever = Retriever.from_vector_store(session.vector_store)
+        self.orchestrator = Orchestrator(self.retriever)
         last_conversation = list(self.session.pages.keys())
         if last_conversation:
             self.conversations = ConversationList(**self.session.pages[last_conversation[-1]])
@@ -48,7 +49,7 @@ class NewConversationPage(BasePage, ConversationMixins):
             for file in uploaded_file:
                 file_path = self.save_file(file)
                 if file_path in self.conversations.context_files:
-                    st.warning(f"File {file_path} already uploaded.")
+                    # st.warning(f"File {file_path} already uploaded.")
                     continue
                 self.conversations.context_files.append(file_path)
                 self.session.pages[self.conversations.id] = self.conversations.model_dump()
@@ -57,6 +58,7 @@ class NewConversationPage(BasePage, ConversationMixins):
                 # chunks = ocr_document.get_splitted_docs(documents)
                 if self.retriever is None:
                     self.retriever = Retriever.from_documents(documents)
+                    self.orchestrator = Orchestrator(self.retriever)
                     self.session.vector_store = self.retriever.vector_store
                 else:
                     self.retriever.add_documents(documents)
@@ -70,7 +72,7 @@ class NewConversationPage(BasePage, ConversationMixins):
                 query=Message(sender="user", message=user_input),
                 response=Message(sender="assistant", message="I am a bot!"),
             )
-            response = self.retriever.get_response(user_input)
+            response = self.orchestrator.get_response(user_input)
             conversation.response.message = response.get(
                 "answer", "No context for the given query found in the document."
             )

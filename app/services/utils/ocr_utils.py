@@ -80,7 +80,7 @@ class OCRMixins:
                 brk = 1
             except IndexError:
                 brk = 2
-            data.append((text, x0, y0, x2, y2, block, line, brk))
+            data.append((text, x0, y0, x2, y2, block, line))
         return data
 
 

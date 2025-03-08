@@ -9,6 +9,10 @@ Welcome to **Chatterbox**, a Retrieval-Augmented Generation (RAG) Chatbot applic
 - **User-Friendly Interface**: Built with Streamlit, Chatterbox offers a clean and intuitive user interface for easy navigation and interaction.
 - **Document Upload**: Users can upload their own documents for personalized interaction.
 
+## Demo
+
+[![Watch the video](https://raw.githubusercontent.com/Quirky-AI-Labs/chatterbox/main/public/Demo.mp4)](https://raw.githubusercontent.com/Quirky-AI-Labs/chatterbox/main/public/Demo.mp4)
+
 ## Requirements
 
 To run this application, you will need:
