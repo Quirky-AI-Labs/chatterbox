@@ -11,7 +11,7 @@ Welcome to **Chatterbox**, a Retrieval-Augmented Generation (RAG) Chatbot applic
 
 ## Demo
 
-<video src="public/Demo.mp4" controls width="100%"></video>
+[![Watch the video](https://raw.githubusercontent.com/Quirky-AI-Labs/chatterbox/main/public/Demo.mp4)](https://raw.githubusercontent.com/Quirky-AI-Labs/chatterbox/main/public/Demo.mp4)
 
 ## Requirements
 
